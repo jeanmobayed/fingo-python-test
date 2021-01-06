@@ -1,0 +1,42 @@
+{% extends 'unit_converter/main.html' %} {% block content %}
+
+<script>
+  async function process_input() {
+    var url = "/process_input";
+    var data = { input: document.getElementById("input").value };
+
+    const response = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const output = await response.json();
+    document.getElementById("output").value = output.join("\n");
+  }
+</script>
+
+<div class="container">
+  <div class="row">
+    <div class="col-6 gy-5 gx-5">
+      <h1>Input</h1>
+      <textarea class="form-control" id="input" rows="15" style="resize:none;"></textarea>
+      <button
+        onclick="process_input()"
+        type="button"
+        class="btn btn-primary mt-3"
+      >
+        Submit
+      </button>
+    </div>
+
+    <div class="col-6 gy-5 gx-5">
+      <h1>Output</h1>
+      <textarea class="form-control" id="output" rows="15" style="resize:none;" disabled></textarea>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
